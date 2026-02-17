@@ -1,0 +1,36 @@
+# Byte-compiled / optimized
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Model checkpoints & weights
+checkpoints/
+models/
+*.pt
+*.pth
+*.bin
+*.safetensors
+*.ckpt
+*.gguf
+
+# Training artifacts
+wandb/
+runs/
+logs/
+logs_eval/
+logs_eval_gsm8k/
+
+# Results
+results/
+
+# Datasets (generated/downloaded)
+mixed_train_70k/
+mixed_eval_70k/
+prepared_data/
+scripts/data/
+
+# Misc
+*.log
+.claude/
+.env
+.DS_Store
