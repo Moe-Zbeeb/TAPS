@@ -229,7 +229,14 @@ def initialize_tree0(input_ids, model, past_key_values, logits_processor):
     #     return draft_tokens, retrieve_indices,tree_mask,tree_position_ids, hidden_states, token
     return draft_tokens, retrieve_indices,tree_mask,tree_position_ids, logits, hidden_state, sample_token
 
-def initialize_tree(input_ids, model, past_key_values, logits_processor, return_entropy=False):
+def initialize_tree(
+        input_ids,
+        model,
+        past_key_values,
+        logits_processor,
+        return_entropy=False,
+        return_confidence=False,
+):
     outputs, orig, hidden_states = model(
         input_ids, past_key_values=past_key_values, output_orig=True
     )
@@ -250,9 +257,34 @@ def initialize_tree(input_ids, model, past_key_values, logits_processor, return_
         if outputs["hidden_states"][0].device != ea_device:
             outputs["hidden_states"] = [x.to(ea_device) for x in outputs["hidden_states"]]
         hidden_states=torch.cat(outputs["hidden_states"],dim=-1)
+    if return_entropy and return_confidence:
+        draft_tokens, retrieve_indices, tree_mask, tree_position_ids, draft_entropies, draft_confidences = model.ea_layer.topK_genrate(
+            hidden_states,
+            input_ids,
+            model.base_model.lm_head,
+            logits_processor,
+            return_entropy=True,
+            return_confidence=True,
+        )
+        return draft_tokens, retrieve_indices, tree_mask, tree_position_ids, orig, hidden_states, token, draft_entropies, draft_confidences
     if return_entropy:
-        draft_tokens, retrieve_indices, tree_mask, tree_position_ids, draft_entropies = model.ea_layer.topK_genrate(hidden_states, input_ids, model.base_model.lm_head, logits_processor, return_entropy=True)
+        draft_tokens, retrieve_indices, tree_mask, tree_position_ids, draft_entropies = model.ea_layer.topK_genrate(
+            hidden_states,
+            input_ids,
+            model.base_model.lm_head,
+            logits_processor,
+            return_entropy=True,
+        )
         return draft_tokens, retrieve_indices, tree_mask, tree_position_ids, orig, hidden_states, token, draft_entropies
+    if return_confidence:
+        draft_tokens, retrieve_indices, tree_mask, tree_position_ids, draft_confidences = model.ea_layer.topK_genrate(
+            hidden_states,
+            input_ids,
+            model.base_model.lm_head,
+            logits_processor,
+            return_confidence=True,
+        )
+        return draft_tokens, retrieve_indices, tree_mask, tree_position_ids, orig, hidden_states, token, draft_confidences
     draft_tokens, retrieve_indices,tree_mask,tree_position_ids = model.ea_layer.topK_genrate(hidden_states, input_ids, model.base_model.lm_head,logits_processor)
     return draft_tokens, retrieve_indices,tree_mask,tree_position_ids, orig, hidden_states, token
 
@@ -433,6 +465,7 @@ def update_inference_inputs(
         hidden_state_new,
         sample_p,
         return_entropy=False,
+        return_confidence=False,
 ):
     prev_input_len = input_ids.shape[1]
     # Map the best candidate indices to the original indices in the sequence
@@ -467,12 +500,39 @@ def update_inference_inputs(
         token = torch.argmax(prob)
         token = token[None, None]
     # hidden_state = torch.cat((hidden_state, accept_hidden_state_new), dim=1)
+    if return_entropy and return_confidence:
+        draft_tokens, retrieve_indices, tree_mask, tree_position_ids, draft_entropies, draft_confidences = model.ea_layer.topK_genrate(
+            accept_hidden_state_new,
+            input_ids=torch.cat((input_ids, token.to(input_ids.device)), dim=1),
+            head=model.base_model.lm_head,
+            logits_processor=logits_processor,
+            return_entropy=True,
+            return_confidence=True,
+        )
+        new_token += accept_length + 1
+        return input_ids, draft_tokens, retrieve_indices, tree_mask, tree_position_ids, new_token, None, token, draft_entropies, draft_confidences
+
     if return_entropy:
-        draft_tokens, retrieve_indices, tree_mask, tree_position_ids, draft_entropies = model.ea_layer.topK_genrate(accept_hidden_state_new,
-                                                  input_ids=torch.cat((input_ids, token.to(input_ids.device)), dim=1),
-                                                  head=model.base_model.lm_head, logits_processor=logits_processor, return_entropy=True)
+        draft_tokens, retrieve_indices, tree_mask, tree_position_ids, draft_entropies = model.ea_layer.topK_genrate(
+            accept_hidden_state_new,
+            input_ids=torch.cat((input_ids, token.to(input_ids.device)), dim=1),
+            head=model.base_model.lm_head,
+            logits_processor=logits_processor,
+            return_entropy=True,
+        )
         new_token += accept_length + 1
         return input_ids, draft_tokens, retrieve_indices, tree_mask, tree_position_ids, new_token, None, token, draft_entropies
+
+    if return_confidence:
+        draft_tokens, retrieve_indices, tree_mask, tree_position_ids, draft_confidences = model.ea_layer.topK_genrate(
+            accept_hidden_state_new,
+            input_ids=torch.cat((input_ids, token.to(input_ids.device)), dim=1),
+            head=model.base_model.lm_head,
+            logits_processor=logits_processor,
+            return_confidence=True,
+        )
+        new_token += accept_length + 1
+        return input_ids, draft_tokens, retrieve_indices, tree_mask, tree_position_ids, new_token, None, token, draft_confidences
 
     draft_tokens, retrieve_indices,tree_mask,tree_position_ids = model.ea_layer.topK_genrate(accept_hidden_state_new,
                                               input_ids=torch.cat((input_ids, token.to(input_ids.device)), dim=1),

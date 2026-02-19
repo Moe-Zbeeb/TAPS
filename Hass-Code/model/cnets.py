@@ -657,7 +657,7 @@ class Model(nn.Module):
         self.stable_kv = None
 
     @torch.no_grad()
-    def topK_genrate(self, hidden_states, input_ids, head, logits_processor, return_logprobs=False):
+    def topK_genrate(self, hidden_states, input_ids, head, logits_processor, return_logprobs=False, return_confidence=False):
 
         input_ids = input_ids.to(hidden_states.device)
         total_tokens = self.total_tokens
@@ -758,6 +758,9 @@ class Model(nn.Module):
         top_scores = torch.topk(scores_list, total_tokens, dim=-1)
         top_scores_index = top_scores.indices
         top_scores_index = torch.sort(top_scores_index).values
+
+        if return_confidence:
+            draft_confidences = torch.exp(scores_list[top_scores_index].float())
 
         draft_tokens = ss_token_list[top_scores_index]
         draft_tokens = torch.cat((sample_token, draft_tokens), dim=0)
@@ -865,6 +868,9 @@ class Model(nn.Module):
                     padded.append(g)
                 gathered_logprobs = torch.stack(padded, dim=0)
             return draft_tokens, retrieve_indices, tree_mask, tree_position_ids, gathered_logprobs
+
+        if return_confidence:
+            return draft_tokens, retrieve_indices, tree_mask, tree_position_ids, draft_confidences
 
         return draft_tokens, retrieve_indices, tree_mask, tree_position_ids
 

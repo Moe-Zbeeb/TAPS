@@ -670,7 +670,15 @@ class Model(nn.Module):
         self.stable_kv = None
 
     @torch.no_grad()
-    def topK_genrate(self, hidden_states, input_ids, head, logits_processor, return_entropy=False):
+    def topK_genrate(
+            self,
+            hidden_states,
+            input_ids,
+            head,
+            logits_processor,
+            return_entropy=False,
+            return_confidence=False,
+    ):
 
         input_ids = input_ids.to(hidden_states.device)
         total_tokens = self.total_tokens
@@ -779,6 +787,10 @@ class Model(nn.Module):
         if return_entropy:
             entropy_flat_tensor = torch.cat(entropy_flat, dim=0)
             draft_entropies = entropy_flat_tensor[top_scores_index]
+        if return_confidence:
+            # Confidence follows EAGLE-2 draft score semantics:
+            # cumulative path log-probabilities mapped to probability space.
+            draft_confidences = torch.exp(scores_list[top_scores_index].float())
 
         draft_parents = torch.cat(parents_list, dim=0)[top_scores_index // top_k].long()
         mask_index = torch.searchsorted(top_scores_index, draft_parents - 1, right=False)
@@ -838,8 +850,12 @@ class Model(nn.Module):
         del mask_index, mask_index_list, noleaf_index, noleaf_num, leaf_num, max_depth, rid
         tree_position_ids = tree_position_ids.to(hidden_states.device)
 
+        if return_entropy and return_confidence:
+            return draft_tokens, retrieve_indices, tree_mask, tree_position_ids, draft_entropies, draft_confidences
         if return_entropy:
             return draft_tokens, retrieve_indices, tree_mask, tree_position_ids, draft_entropies
+        if return_confidence:
+            return draft_tokens, retrieve_indices, tree_mask, tree_position_ids, draft_confidences
         return draft_tokens, retrieve_indices, tree_mask, tree_position_ids
 
 

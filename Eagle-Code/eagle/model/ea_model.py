@@ -232,6 +232,7 @@ class EaModel(nn.Module):
             log=False,
             is_llama3=False,
             entropy_log=False,
+            confidence_log=False,
 
     ):
         if is_llama3:
@@ -249,11 +250,17 @@ class EaModel(nn.Module):
         input_ids = input_ids.clone()
         self.ea_layer.reset_kv()
 
+        if entropy_log and confidence_log:
+            raise ValueError("entropy_log and confidence_log cannot both be enabled in the same call.")
+
         if entropy_log:
             accepted_entropies = []
             rejected_entropies = []
             verifier_accepted_entropies = []
             verifier_rejected_entropies = []
+        if confidence_log:
+            accepted_confidences = []
+            rejected_confidences = []
 
         # Initialize the past key and value states
         if hasattr(self, "past_key_values"):
@@ -278,6 +285,10 @@ class EaModel(nn.Module):
         if entropy_log:
             draft_tokens, retrieve_indices, tree_mask, tree_position_ids, logits, hidden_state, sample_token, draft_entropies = initialize_tree(
                 input_ids, self, past_key_values, logits_processor, return_entropy=True
+            )
+        elif confidence_log:
+            draft_tokens, retrieve_indices, tree_mask, tree_position_ids, logits, hidden_state, sample_token, draft_confidences = initialize_tree(
+                input_ids, self, past_key_values, logits_processor, return_confidence=True
             )
         else:
             draft_tokens, retrieve_indices, tree_mask, tree_position_ids, logits, hidden_state, sample_token = initialize_tree(
@@ -346,6 +357,20 @@ class EaModel(nn.Module):
                 for di in range(total_draft):
                     if di not in accepted_set:
                         rejected_entropies.append(draft_entropies[di].item())
+            elif confidence_log:
+                al = int(accept_length)
+                total_draft = len(draft_confidences)
+                accepted_set = set()
+                if al > 0:
+                    accepted_indices = retrieve_indices[best_candidate, 1:al + 1]
+                    for ai in accepted_indices.tolist():
+                        draft_idx = ai - 1
+                        if 0 <= draft_idx < total_draft:
+                            accepted_confidences.append(draft_confidences[draft_idx].item())
+                            accepted_set.add(draft_idx)
+                for di in range(total_draft):
+                    if di not in accepted_set:
+                        rejected_confidences.append(draft_confidences[di].item())
 
             # print(accept_length)
             # Adjusting the input sequence, draft model forward
@@ -364,6 +389,22 @@ class EaModel(nn.Module):
                     hidden_state_new,
                     sample_p,
                     return_entropy=True,
+                )
+            elif confidence_log:
+                input_ids, draft_tokens, retrieve_indices, tree_mask, tree_position_ids, new_token, hidden_state, sample_token, draft_confidences = update_inference_inputs(
+                    input_ids,
+                    candidates,
+                    best_candidate,
+                    accept_length,
+                    retrieve_indices,
+                    logits_processor,
+                    new_token,
+                    past_key_values_data,
+                    current_length_data,
+                    self,
+                    hidden_state_new,
+                    sample_p,
+                    return_confidence=True,
                 )
             else:
                 input_ids, draft_tokens, retrieve_indices, tree_mask, tree_position_ids, new_token, hidden_state, sample_token = update_inference_inputs(
@@ -396,6 +437,11 @@ class EaModel(nn.Module):
                 return input_ids, accepted_entropies, rejected_entropies, verifier_accepted_entropies, verifier_rejected_entropies
             else:
                 return input_ids, new_token, idx, accepted_entropies, rejected_entropies, verifier_accepted_entropies, verifier_rejected_entropies
+        if confidence_log:
+            if not log:
+                return input_ids, accepted_confidences, rejected_confidences
+            else:
+                return input_ids, new_token, idx, accepted_confidences, rejected_confidences
         if not log:
             return input_ids
         else:
