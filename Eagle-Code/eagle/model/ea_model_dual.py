@@ -277,7 +277,7 @@ class DualEaModel(nn.Module):
         # Sample first token but do NOT append to input_ids yet.
         if logits_processor is not None:
             first_logits = logits_processor(None, orig[:, -1])
-            token = torch.multinomial(torch.softmax(first_logits, dim=-1), 1)[None]
+            token = torch.multinomial(torch.softmax(first_logits, dim=-1), 1)
         else:
             token = torch.argmax(orig[:, -1])[None, None]
 
@@ -339,7 +339,7 @@ class DualEaModel(nn.Module):
 
             # --- Sample next token ---
             if logits_processor is not None:
-                next_token = torch.multinomial(sample_p, 1)[None]
+                next_token = torch.multinomial(sample_p, 1)
             else:
                 next_token = torch.argmax(sample_p)[None, None]
 
