@@ -50,4 +50,4 @@ wait
 echo "All finished."
 echo ""
 
-python evaluate/summarize_entropy.py
+python scripts/summarize_entropy.py

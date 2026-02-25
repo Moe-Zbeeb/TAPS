@@ -6,8 +6,8 @@ confidence ↔ lower entropy, so this is equivalent to the entropy-min routing
 used in gen_routing_eval.py.
 
 Usage:
-    python evaluate/routing_table.py
-    python evaluate/routing_table.py --output-dir results/confidence \
+    python scripts/routing_table.py
+    python scripts/routing_table.py --output-dir results/confidence \
         --bench-name mt_bench gsm8k math_500 svamp
 """
 

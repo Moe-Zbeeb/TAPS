@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Route between MathInstruct and ShareGPT using confidence, with tie-break to
-ShareGPT-MathInstruct, then compute tau using evaluate/compute_tau.py logic.
+ShareGPT-MathInstruct, then compute tau using scripts/compute_tau.py logic.
 
 Routing rule:
 1) Compare overall confidence score for MathInstruct vs ShareGPT.
@@ -189,7 +189,7 @@ def main():
     files = " ".join(
         str(output_dir / f"{b}_confidence_router.jsonl") for b in args.bench_name
     )
-    print(f"python evaluate/compute_tau.py {files}")
+    print(f"python scripts/compute_tau.py {files}")
 
 
 if __name__ == "__main__":

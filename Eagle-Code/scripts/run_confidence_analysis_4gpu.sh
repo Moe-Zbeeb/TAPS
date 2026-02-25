@@ -64,7 +64,7 @@ for i in 0 1 2 3; do
   fi
 done
 
-python evaluate/print_confidence_results.py \
+python scripts/print_confidence_results.py \
   --output-dir results/confidence \
   --model-ids "${MODEL_IDS[@]}" \
   --bench-name "${BENCHES[@]}" \

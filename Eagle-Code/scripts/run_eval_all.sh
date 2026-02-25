@@ -42,7 +42,7 @@ run_eval() {
     --temperature "${TEMPERATURE}" \
     --answer-file "${out_file}"
 
-  python evaluate/compute_tau.py "${out_file}"
+  python scripts/compute_tau.py "${out_file}"
 
   # Append tau stats into a single JSON summary
   python - <<PY

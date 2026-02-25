@@ -29,6 +29,10 @@ mixed_eval_70k/
 prepared_data/
 scripts/data/
 
+# LaTeX build artifacts
+*.aux
+*.out
+
 # Misc
 *.log
 .claude/

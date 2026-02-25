@@ -5,7 +5,7 @@ computes tau = total_new_tokens / total_decode_steps per benchmark, prints
 a formatted table, and saves it to results/merged/acceptance_table.txt.
 
 Usage:
-    python evaluate/merged_tree_table.py \
+    python scripts/merged_tree_table.py \
         --results-dir results/merged \
         --model-id merged_tree_eagle2
 """

@@ -3,10 +3,10 @@
 # Outputs τ = total_new_tokens / total_decode_steps for each benchmark.
 #
 # Usage:
-#   BASE_MODEL_PATH=/path/to/Meta-Llama-3-8B-Instruct bash evaluate/run_dual_head_eval.sh
+#   BASE_MODEL_PATH=/path/to/Meta-Llama-3-8B-Instruct bash scripts/run_dual_head_eval.sh
 #
 # Override any variable on the command line, e.g.
-#   BENCHES="gsm8k math_500" bash evaluate/run_dual_head_eval.sh
+#   BENCHES="gsm8k math_500" bash scripts/run_dual_head_eval.sh
 
 set -euo pipefail
 

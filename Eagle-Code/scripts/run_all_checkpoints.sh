@@ -7,7 +7,7 @@ set -euo pipefail
 
 cd "$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
-EVAL_SCRIPT="evaluate/run_eval_all.sh"
+EVAL_SCRIPT="scripts/run_eval_all.sh"
 BASE_MODEL_PATH="${BASE_MODEL_PATH:?Set BASE_MODEL_PATH to your base model (e.g. /path/to/Meta-Llama-3-8B-Instruct)}"
 
 declare -A MODELS

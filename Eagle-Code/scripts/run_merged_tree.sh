@@ -4,10 +4,10 @@
 # submitted to the verifier in a single pass.
 #
 # Usage:
-#   BASE_MODEL_PATH=/path/to/Meta-Llama-3-8B-Instruct bash evaluate/run_merged_tree.sh
+#   BASE_MODEL_PATH=/path/to/Meta-Llama-3-8B-Instruct bash scripts/run_merged_tree.sh
 #
 # Override any variable on the command line, e.g.
-#   BENCHES="gsm8k math_500" bash evaluate/run_merged_tree.sh
+#   BENCHES="gsm8k math_500" bash scripts/run_merged_tree.sh
 
 set -euo pipefail
 
@@ -89,6 +89,6 @@ if [ "${FAILED}" -eq 1 ]; then
 fi
 
 echo ""
-python evaluate/merged_tree_table.py \
+python scripts/merged_tree_table.py \
     --results-dir "${RESULTS_DIR}" \
     --model-id    "${MODEL_ID}"

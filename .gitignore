@@ -179,5 +179,9 @@ wandb/
 # Results
 results/
 
+# LaTeX build artifacts
+*.aux
+*.out
+
 # Claude Code settings
 .claude/
