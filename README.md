@@ -25,17 +25,20 @@ TAPS studies how the draft training distribution shapes speculative decoding qua
 - **Routing signal:** Confidence cleanly separates workloads (MathInstruct chosen for 90.8% of GSM8K; ShareGPT for 81.2% of MT-Bench). Entropy is diagnostic but weaker for routing.
 
 ## Figures
-<p align="center">
-  <img src="Taps-draft1/figures/illustrative.png" alt="Speculative decoding pipeline with draft proposals verified by the target model" width="360">
-  <br>
-  <em>Speculative decoding pipeline (source: 764×1092 px).</em>
-</p>
-
-<p align="center">
-  <img src="Taps-draft1/figures/mergdTrees.png" alt="Merged-tree verification combining MathInstruct and ShareGPT draft trees" width="780">
-  <br>
-  <em>Merged-tree verification packs MathInstruct and ShareGPT trees for one-pass verification (source: 1666×744 px).</em>
-</p>
+<table>
+  <tr>
+    <td align="center">
+      <img src="Taps-draft1/figures/illustrative.png" alt="Speculative decoding pipeline with draft proposals verified by the target model" height="220">
+    </td>
+    <td align="center">
+      <img src="Taps-draft1/figures/mergdTrees.png" alt="Merged-tree verification combining MathInstruct and ShareGPT draft trees" height="220">
+    </td>
+  </tr>
+  <tr>
+    <td align="center"><em>Speculative decoding pipeline.</em></td>
+    <td align="center"><em>Merged-tree verification packs MathInstruct and ShareGPT trees for one-pass verification.</em></td>
+  </tr>
+</table>
 
 ## Results snapshot
 Average acceptance length (higher is better), temperature 0:
