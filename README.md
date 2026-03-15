@@ -32,6 +32,13 @@ KAUST · AUB — Contacts: [mbz02@mail.aub.edu](mailto:mbz02@mail.aub.edu), [has
 ## Overview
 TAPS studies how the draft training distribution shapes speculative decoding quality. Using Meta-Llama-3-8B-Instruct as the verifier and lightweight LLaMA-style drafters (HASS and EAGLE-2, ~0.8B params, shared tokenizer), the work compares single-domain training, mixed-domain training, and inference-time composition (confidence routing, merged-tree verification).
 
+### At a glance
+- **Workloads:** MT-Bench (chat), GSM8K, MATH-500, SVAMP (reasoning).
+- **Metric:** acceptance length (avg accepted draft tokens per verifier call), lossless speculative decoding.
+- **Verifier:** Meta-Llama-3-8B-Instruct.
+- **Drafters:** HASS and EAGLE-2, single-layer decoder (~0.8B params), shared tokenizer with verifier.
+- **Compute:** single node, 4×A100 (paper experiments).
+
 ## Abstract
 > Speculative decoding speeds up autoregressive generation by letting a lightweight drafter propose tokens that a larger verifier checks in parallel. We study how much draft quality depends on the training distribution using HASS and EAGLE-2 drafts trained on MathInstruct, ShareGPT, and mixed variants, evaluated on MT-Bench, GSM8K, MATH-500, and SVAMP. Task-matched drafts specialize; mixed data aids robustness but is not uniformly dominant across temperatures. Among composition strategies, weight averaging underperforms, confidence routing improves, and merged-tree verification attains the highest acceptance length. Confidence is a stronger routing signal than entropy. Results show speculative decoding quality hinges on both draft architecture and the alignment between draft training data and downstream workload.
 
@@ -57,6 +64,27 @@ TAPS studies how the draft training distribution shapes speculative decoding qua
   </tr>
 </table>
 
+<p align="center">
+  <img src="Taps-draft1/figures/averaging_effect.png" alt="Interpolation sweep for checkpoint averaging between MathInstruct and ShareGPT drafts" width="860">
+  <br>
+  <em>Checkpoint averaging is unstable across interpolation weights and remains weaker than inference-time composition (source: 5434×1294 px).</em>
+</p>
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="Taps-draft1/figures/depth_tables_grid.png" alt="Acceptance by speculative depth across backbones, benchmarks, and temperatures" width="520">
+    </td>
+    <td align="center">
+      <img src="Taps-draft1/figures/draft_entropy_eagle2.png" alt="Accepted vs. rejected token entropy for EAGLE-2 drafts" width="520">
+    </td>
+  </tr>
+  <tr>
+    <td align="center"><em>Acceptance declines with depth but specialization persists (source: 4046×3665 px).</em></td>
+    <td align="center"><em>Rejected tokens show higher entropy; confidence remains the stronger routing signal (source: 7059×1554 px).</em></td>
+  </tr>
+</table>
+
 ## Results snapshot
 Average acceptance length (higher is better), temperature 0:
 
@@ -68,6 +96,15 @@ Average acceptance length (higher is better), temperature 0:
 | Weight Averaged | 2.59 | Weight Averaged | 2.42 |
 
 Benchmarks: MT-Bench, GSM8K, MATH-500, SVAMP. Metric: acceptance length (lossless speculative decoding constraint).
+
+Benchmark-level routing decisions (confidence-based, EAGLE-2):
+
+| Benchmark | MathInstruct | ShareGPT |
+| --- | --- | --- |
+| MT-Bench | 18.8% | 81.2% |
+| GSM8K | 90.8% | 9.2% |
+| MATH-500 | 97.0% | 3.0% |
+| SVAMP | 93.0% | 7.0% |
 
 ## Repository map
 - `Taps-draft1/` — LaTeX manuscript (sections, figures, macros).
