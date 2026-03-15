@@ -1,6 +1,6 @@
 # TAPS: Task-Aware Proposal Distributions for Speculative Sampling
 
-**Research-grade README · March 2026**
+**Project Page · March 2026**
 
 Mohamad Zbib, Mohamad Bazzi, Ammar Mohanna, **Bernard Ghanem**\*, **Hasan Abed Al Kader Hammoud**\*  (\*equal advising)  
 KAUST · AUB — Contacts: [mbz02@mail.aub.edu](mailto:mbz02@mail.aub.edu), [hasanabedalkader.hammoud@kaust.edu.sa](mailto:hasanabedalkader.hammoud@kaust.edu.sa)
@@ -12,6 +12,7 @@ KAUST · AUB — Contacts: [mbz02@mail.aub.edu](mailto:mbz02@mail.aub.edu), [has
 - Weights: https://huggingface.co/collections/zbeeb/taps
 - Datasets: https://huggingface.co/datasets/zbeeb/TAPS-Datasets
 - Code: `Hass-Code/` (HASS drafts), `Eagle-Code/` (EAGLE-2/3 drafts), supporting PDFs (`docs/ROUTING_TECHNICAL_REPORT.pdf`, `docs/MERGED_TREE_DUAL_DRAFTING.pdf`)
+ - Demo: `Eagle-Code/eagle/application/webui.py`
 
 ## Contents
 - [Overview](#overview)
@@ -32,13 +33,13 @@ KAUST · AUB — Contacts: [mbz02@mail.aub.edu](mailto:mbz02@mail.aub.edu), [has
 ## Overview
 TAPS studies how the draft training distribution shapes speculative decoding quality. Using Meta-Llama-3-8B-Instruct as the verifier and lightweight LLaMA-style drafters (HASS and EAGLE-2, ~0.8B params, shared tokenizer), the work compares single-domain training, mixed-domain training, and inference-time composition (confidence routing, merged-tree verification).
 
-### At a glance
-- **Workloads:** MT-Bench (chat), GSM8K, MATH-500, SVAMP (reasoning).
-- **Metric:** acceptance length (avg accepted draft tokens per verifier call), lossless speculative decoding.
+### TL;DR (At a glance)
+- **Goal:** Quantify how draft training data and specialist composition affect speculative decoding.
 - **Verifier:** Meta-Llama-3-8B-Instruct.
-- **Drafters:** HASS and EAGLE-2, single-layer decoder (~0.8B params), shared tokenizer with verifier.
-- **Compute:** single node, 4×A100 (paper experiments).
-- **Core question:** How much does draft training data—and how we combine specialists—shape speculative decoding quality?
+- **Drafts:** HASS and EAGLE-2 (single-layer, ~0.8B params, shared tokenizer).
+- **Workloads:** MT-Bench (chat), GSM8K, MATH-500, SVAMP (reasoning).
+- **Metric:** acceptance length (lossless speculative decoding).
+- **Compute:** single node, 4×A100.
 
 ## Abstract
 > Speculative decoding speeds up autoregressive generation by letting a lightweight drafter propose tokens that a larger verifier checks in parallel. We study how much draft quality depends on the training distribution using HASS and EAGLE-2 drafts trained on MathInstruct, ShareGPT, and mixed variants, evaluated on MT-Bench, GSM8K, MATH-500, and SVAMP. Task-matched drafts specialize; mixed data aids robustness but is not uniformly dominant across temperatures. Among composition strategies, weight averaging underperforms, confidence routing improves, and merged-tree verification attains the highest acceptance length. Confidence is a stronger routing signal than entropy. Results show speculative decoding quality hinges on both draft architecture and the alignment between draft training data and downstream workload.
@@ -53,10 +54,10 @@ TAPS studies how the draft training distribution shapes speculative decoding qua
 <table>
   <tr>
     <td align="center">
-      <img src="Taps-draft1/figures/illustrative.png" alt="Speculative decoding pipeline with draft proposals verified by the target model" height="185">
+      <img src="Taps-draft1/figures/illustrative.png" alt="Speculative decoding pipeline with draft proposals verified by the target model" height="170">
     </td>
     <td align="center">
-      <img src="Taps-draft1/figures/mergdTrees.png" alt="Merged-tree verification combining MathInstruct and ShareGPT draft trees" height="185">
+      <img src="Taps-draft1/figures/mergdTrees.png" alt="Merged-tree verification combining MathInstruct and ShareGPT draft trees" height="170">
     </td>
   </tr>
   <tr>
@@ -66,7 +67,7 @@ TAPS studies how the draft training distribution shapes speculative decoding qua
 </table>
 
 <p align="center">
-  <img src="Taps-draft1/figures/averaging_effect.png" alt="Interpolation sweep for checkpoint averaging between MathInstruct and ShareGPT drafts" width="780">
+  <img src="Taps-draft1/figures/averaging_effect.png" alt="Interpolation sweep for checkpoint averaging between MathInstruct and ShareGPT drafts" width="760">
   <br>
   <em>Checkpoint averaging is unstable across interpolation weights and remains weaker than inference-time composition (source: 5434×1294 px).</em>
 </p>
@@ -74,10 +75,10 @@ TAPS studies how the draft training distribution shapes speculative decoding qua
 <table>
   <tr>
     <td align="center">
-      <img src="Taps-draft1/figures/depth_tables_grid.png" alt="Acceptance by speculative depth across backbones, benchmarks, and temperatures" width="480">
+      <img src="Taps-draft1/figures/depth_tables_grid.png" alt="Acceptance by speculative depth across backbones, benchmarks, and temperatures" width="460">
     </td>
     <td align="center">
-      <img src="Taps-draft1/figures/draft_entropy_eagle2.png" alt="Accepted vs. rejected token entropy for EAGLE-2 drafts" width="480">
+      <img src="Taps-draft1/figures/draft_entropy_eagle2.png" alt="Accepted vs. rejected token entropy for EAGLE-2 drafts" width="460">
     </td>
   </tr>
   <tr>
