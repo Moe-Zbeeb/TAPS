@@ -11,7 +11,21 @@ KAUST · AUB — Contacts: [mbz02@mail.aub.edu](mailto:mbz02@mail.aub.edu), [has
 - Paper source: `Taps-draft1/main.tex` (build with `latexmk -pdf -interaction=nonstopmode main.tex`)
 - Weights: https://huggingface.co/collections/zbeeb/taps
 - Datasets: https://huggingface.co/datasets/zbeeb/TAPS-Datasets
-- Code: `Hass-Code/` (HASS drafts), `Eagle-Code/` (EAGLE-2/3 drafts), supporting PDFs in `docs/`
+- Code: `Hass-Code/` (HASS drafts), `Eagle-Code/` (EAGLE-2/3 drafts), supporting PDFs (`docs/ROUTING_TECHNICAL_REPORT.pdf`, `docs/MERGED_TREE_DUAL_DRAFTING.pdf`)
+
+## Contents
+- [Overview](#overview)
+- [Abstract](#abstract)
+- [Highlights](#highlights)
+- [Figures](#figures)
+- [Results snapshot](#results-snapshot)
+- [Repository map](#repository-map)
+- [Setup](#setup)
+- [Run recipes — HASS](#run-recipes--hass)
+- [Run recipes — EAGLE](#run-recipes--eagle)
+- [Reproducing the paper](#reproducing-the-paper)
+- [Citation](#citation)
+- [License](#license)
 
 ---
 
@@ -31,10 +45,10 @@ TAPS studies how the draft training distribution shapes speculative decoding qua
 <table>
   <tr>
     <td align="center">
-      <img src="Taps-draft1/figures/illustrative.png" alt="Speculative decoding pipeline with draft proposals verified by the target model" height="200">
+      <img src="Taps-draft1/figures/illustrative.png" alt="Speculative decoding pipeline with draft proposals verified by the target model" height="190">
     </td>
     <td align="center">
-      <img src="Taps-draft1/figures/mergdTrees.png" alt="Merged-tree verification combining MathInstruct and ShareGPT draft trees" height="200">
+      <img src="Taps-draft1/figures/mergdTrees.png" alt="Merged-tree verification combining MathInstruct and ShareGPT draft trees" height="190">
     </td>
   </tr>
   <tr>
@@ -138,6 +152,12 @@ BASE_MODEL=/path/to/Meta-Llama-3-8B-Instruct bash scripts/run_routing_eval.sh
 - Benchmarks: MT-Bench, GSM8K, MATH-500, SVAMP at temperatures 0 and 1.
 - Metric: acceptance length (avg accepted draft tokens per verifier call) with lossless speculative decoding.
 - Hardware: single node, 4×A100 (per paper).
+- Suggested order:
+  1) Train single-domain drafts (MathInstruct, ShareGPT) for both backbones.  
+  2) Train mixed 35k+35k and 70k+70k.  
+  3) Run acceptance evals (temps 0 and 1) and collect JSON outputs.  
+  4) Run confidence routing and merged-tree evals.  
+  5) Tabulate with `scripts/merged_tree_table.py` / `scripts/routing_table.py` as appropriate.
 
 ## Citation
 ```bibtex
