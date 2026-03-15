@@ -87,26 +87,46 @@ TAPS studies how the draft training distribution shapes speculative decoding qua
   </tr>
 </table>
 
-## Results snapshot
-Average acceptance length (higher is better), temperature 0:
+## Main results (acceptance length)
+Benchmarks: MT-Bench (chat), GSM8K, MATH-500, SVAMP. Metric: average acceptance length (higher is better) under lossless speculative decoding.
 
-| Variant (HASS) | Avg | Variant (EAGLE-2) | Avg |
-| --- | --- | --- | --- |
-| Mixed 70k+70k | 5.18 | Mixed 70k+70k | 4.48 |
-| Merged Trees | 5.11 | Merged Trees | 5.02 |
-| Confidence Routed | 4.80 | Confidence Routed | 4.63 |
-| Weight Averaged | 2.59 | Weight Averaged | 2.42 |
+**Temperature 0**
 
-Benchmarks: MT-Bench, GSM8K, MATH-500, SVAMP. Metric: acceptance length (lossless speculative decoding constraint).
+| Model Variant | Method | MT-Bench | GSM8K | MATH-500 | SVAMP | Average |
+| --- | --- | --- | --- | --- | --- | --- |
+| MathInstruct | HASS | 2.90 | 5.02 | 5.35 | 3.13 | 4.10 |
+| MathInstruct | EAGLE-2 | 2.54 | 5.04 | 5.28 | 4.81 | 4.42 |
+| ShareGPT | HASS | 3.98 | 4.09 | 3.98 | 4.44 | 4.12 |
+| ShareGPT | EAGLE-2 | 3.57 | 3.72 | 3.81 | 3.71 | 3.70 |
+| Mixed 35k+35k | HASS | 3.92 | 4.77 | 5.02 | 4.15 | 4.47 |
+| Mixed 35k+35k | EAGLE-2 | 3.37 | 4.12 | 4.44 | 4.16 | 4.02 |
+| Mixed 70k+70k | HASS | 4.13 | 5.53 | 5.67 | 5.38 | 5.18 |
+| Mixed 70k+70k | EAGLE-2 | 3.75 | 4.68 | 4.85 | 4.64 | 4.48 |
+| Averaged | HASS | 2.29 | 2.80 | 3.12 | 2.13 | 2.59 |
+| Averaged | EAGLE-2 | 2.07 | 2.53 | 2.57 | 2.50 | 2.42 |
+| Confidence Routed | HASS | 3.93 | 5.01 | 5.37 | 4.89 | 4.80 |
+| Confidence Routed | EAGLE-2 | 3.63 | 4.91 | 5.25 | 4.71 | 4.63 |
+| Merged Trees | HASS | 4.05 | 5.42 | 5.65 | 5.31 | 5.11 |
+| Merged Trees | EAGLE-2 | 3.93 | 5.32 | 5.63 | 5.25 | 5.02 |
 
-Benchmark-level routing decisions (confidence-based, EAGLE-2):
+**Temperature 1**
 
-| Benchmark | MathInstruct | ShareGPT |
-| --- | --- | --- |
-| MT-Bench | 18.8% | 81.2% |
-| GSM8K | 90.8% | 9.2% |
-| MATH-500 | 97.0% | 3.0% |
-| SVAMP | 93.0% | 7.0% |
+| Model Variant | Method | MT-Bench | GSM8K | MATH-500 | SVAMP | Average |
+| --- | --- | --- | --- | --- | --- | --- |
+| MathInstruct | HASS | 2.31 | 4.75 | 4.63 | 2.46 | 3.54 |
+| MathInstruct | EAGLE-2 | 2.43 | 4.71 | 4.61 | 4.53 | 4.07 |
+| ShareGPT | HASS | 3.50 | 4.03 | 3.61 | 3.95 | 3.77 |
+| ShareGPT | EAGLE-2 | 3.38 | 3.72 | 3.43 | 3.65 | 3.54 |
+| Mixed 35k+35k | HASS | 3.46 | 4.66 | 4.47 | 4.57 | 4.29 |
+| Mixed 35k+35k | EAGLE-2 | 3.10 | 4.08 | 4.02 | 4.03 | 3.81 |
+| Mixed 70k+70k | HASS | 3.17 | 4.16 | 3.42 | 4.01 | 3.69 |
+| Mixed 70k+70k | EAGLE-2 | 2.99 | 3.76 | 3.20 | 3.08 | 3.26 |
+| Averaged | HASS | 2.10 | 2.78 | 2.90 | 2.69 | 2.62 |
+| Averaged | EAGLE-2 | 2.01 | 2.49 | 2.42 | 2.45 | 2.34 |
+| Confidence Routed | HASS | 3.51 | 4.72 | 4.55 | 4.71 | 4.37 |
+| Confidence Routed | EAGLE-2 | 3.36 | 4.65 | 4.62 | 4.46 | 4.27 |
+| Merged Trees | HASS | 3.76 | 5.21 | 4.98 | 5.05 | 4.75 |
+| Merged Trees | EAGLE-2 | 3.55 | 5.01 | 4.79 | 4.93 | 4.57 |
 
 ## Repository map
 - `Taps-draft1/` — LaTeX manuscript (sections, figures, macros).
