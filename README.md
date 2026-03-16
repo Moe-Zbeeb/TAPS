@@ -133,7 +133,7 @@ Benchmarks: MT-Bench (chat), GSM8K, MATH-500, SVAMP. Metric: average acceptance 
 ## 🗂️ Repository map
 | Folder | What lives here |
 | --- | --- |
-| `Taps-draft1/` | LaTeX manuscript (sections, figures, macros) |
+| `Taps-draft1/` | Paper figures and assets |
 | `Hass-Code/` | HASS draft training/eval scripts (feature build, training, routing, merged-tree) |
 | `Eagle-Code/` | EAGLE-2/3 draft code, training configs, eval utilities, Gradio demo |
 | `docs/` | Routing and merged-tree technical reports |
