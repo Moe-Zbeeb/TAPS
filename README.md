@@ -8,11 +8,11 @@ KAUST · AUB — Contacts: [mbz02@mail.aub.edu](mailto:mbz02@mail.aub.edu), [has
 ---
 
 ## Quick links
-- Paper source: `Taps-draft1/main.tex` (build with `latexmk -pdf -interaction=nonstopmode main.tex`)
-- Weights: https://huggingface.co/collections/zbeeb/taps
-- Datasets: https://huggingface.co/datasets/zbeeb/TAPS-Datasets
-- Code: `Hass-Code/` (HASS drafts), `Eagle-Code/` (EAGLE-2/3 drafts), supporting PDFs (`docs/ROUTING_TECHNICAL_REPORT.pdf`, `docs/MERGED_TREE_DUAL_DRAFTING.pdf`)
- - Demo: `Eagle-Code/eagle/application/webui.py`
+- 📄 Paper source: `Taps-draft1/main.tex` — build with `latexmk -pdf -interaction=nonstopmode main.tex` (run inside `Taps-draft1/`).
+- 🤗 Weights collection: https://huggingface.co/collections/zbeeb/taps
+- 🤗 Datasets: https://huggingface.co/datasets/zbeeb/TAPS-Datasets
+- 💻 Code: `Hass-Code/` (HASS drafts), `Eagle-Code/` (EAGLE-2/3 drafts), supporting PDFs (`docs/ROUTING_TECHNICAL_REPORT.pdf`, `docs/MERGED_TREE_DUAL_DRAFTING.pdf`)
+- 🖥️ Demo: `Eagle-Code/eagle/application/webui.py`
 
 ## Contents
 - [Overview](#overview)
