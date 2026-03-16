@@ -14,15 +14,17 @@ KAUST · AUB — Contacts: [mbz02@mail.aub.edu](mailto:mbz02@mail.aub.edu), [has
 [![HF Datasets](https://img.shields.io/badge/🤗_HuggingFace-Datasets-blue)](https://huggingface.co/datasets/zbeeb/TAPS-Datasets)
 
 ## Contents
-- [Overview](#-overview)
-- [Abstract](#abstract)
-- [Highlights](#-highlights)
-- [Figures](#figures)
-- [Results snapshot](#results-snapshot)
-- [Repository map](#-repository-map)
-- [Setup](#setup)
-- [Citation](#citation)
-- [License](#license)
+<p align="center">
+  <a href="#-overview">🚀 Overview</a> •
+  <a href="#abstract">🧾 Abstract</a> •
+  <a href="#-highlights">✨ Highlights</a> •
+  <a href="#figures">🖼️ Figures</a> •
+  <a href="#results-snapshot">📌 Results snapshot</a> •
+  <a href="#-repository-map">🗂️ Repo map</a> •
+  <a href="#setup">🛠️ Setup</a> •
+  <a href="#citation">📚 Citation</a> •
+  <a href="#license">⚖️ License</a>
+</p>
 
 ---
 
