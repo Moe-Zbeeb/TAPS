@@ -86,45 +86,53 @@ TAPS studies how the draft training distribution shapes speculative decoding qua
 </table>
 
 ## Results snapshot
-Benchmarks: MT-Bench (chat), GSM8K, MATH-500, SVAMP. Metric: average acceptance length (higher is better) under lossless speculative decoding.
+Benchmarks: MT-Bench (chat), GSM8K, MATH-500, SVAMP. Metric: average acceptance length (higher is better) under lossless speculative decoding. Tables stay inline (no collapses).
 
-### Temperature 0
+<p><strong>Temperature&nbsp;0</strong></p>
+<table>
+  <thead>
+    <tr><th>Model Variant</th><th>Method</th><th>MT-Bench</th><th>GSM8K</th><th>MATH-500</th><th>SVAMP</th><th>Average</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>MathInstruct</td><td>HASS</td><td>2.90</td><td>5.02</td><td>5.35</td><td>3.13</td><td>4.10</td></tr>
+    <tr><td>MathInstruct</td><td>EAGLE-2</td><td>2.54</td><td>5.04</td><td>5.28</td><td>4.81</td><td>4.42</td></tr>
+    <tr><td>ShareGPT</td><td>HASS</td><td>3.98</td><td>4.09</td><td>3.98</td><td>4.44</td><td>4.12</td></tr>
+    <tr><td>ShareGPT</td><td>EAGLE-2</td><td>3.57</td><td>3.72</td><td>3.81</td><td>3.71</td><td>3.70</td></tr>
+    <tr><td>Mixed 35k+35k</td><td>HASS</td><td>3.92</td><td>4.77</td><td>5.02</td><td>4.15</td><td>4.47</td></tr>
+    <tr><td>Mixed 35k+35k</td><td>EAGLE-2</td><td>3.37</td><td>4.12</td><td>4.44</td><td>4.16</td><td>4.02</td></tr>
+    <tr><td>Mixed 70k+70k</td><td>HASS</td><td>4.13</td><td>5.53</td><td>5.67</td><td>5.38</td><td>5.18</td></tr>
+    <tr><td>Mixed 70k+70k</td><td>EAGLE-2</td><td>3.75</td><td>4.68</td><td>4.85</td><td>4.64</td><td>4.48</td></tr>
+    <tr><td>Averaged</td><td>HASS</td><td>2.29</td><td>2.80</td><td>3.12</td><td>2.13</td><td>2.59</td></tr>
+    <tr><td>Averaged</td><td>EAGLE-2</td><td>2.07</td><td>2.53</td><td>2.57</td><td>2.50</td><td>2.42</td></tr>
+    <tr><td>Confidence Routed</td><td>HASS</td><td>3.93</td><td>5.01</td><td>5.37</td><td>4.89</td><td>4.80</td></tr>
+    <tr><td>Confidence Routed</td><td>EAGLE-2</td><td>3.63</td><td>4.91</td><td>5.25</td><td>4.71</td><td>4.63</td></tr>
+    <tr><td>Merged Trees</td><td>HASS</td><td>4.05</td><td>5.42</td><td>5.65</td><td>5.31</td><td>5.11</td></tr>
+    <tr><td>Merged Trees</td><td>EAGLE-2</td><td>3.93</td><td>5.32</td><td>5.63</td><td>5.25</td><td>5.02</td></tr>
+  </tbody>
+</table>
 
-| Model Variant | Method | MT-Bench | GSM8K | MATH-500 | SVAMP | Average |
-| --- | --- | --- | --- | --- | --- | --- |
-| MathInstruct | HASS | 2.90 | 5.02 | 5.35 | 3.13 | 4.10 |
-| MathInstruct | EAGLE-2 | 2.54 | 5.04 | 5.28 | 4.81 | 4.42 |
-| ShareGPT | HASS | 3.98 | 4.09 | 3.98 | 4.44 | 4.12 |
-| ShareGPT | EAGLE-2 | 3.57 | 3.72 | 3.81 | 3.71 | 3.70 |
-| Mixed 35k+35k | HASS | 3.92 | 4.77 | 5.02 | 4.15 | 4.47 |
-| Mixed 35k+35k | EAGLE-2 | 3.37 | 4.12 | 4.44 | 4.16 | 4.02 |
-| Mixed 70k+70k | HASS | 4.13 | 5.53 | 5.67 | 5.38 | 5.18 |
-| Mixed 70k+70k | EAGLE-2 | 3.75 | 4.68 | 4.85 | 4.64 | 4.48 |
-| Averaged | HASS | 2.29 | 2.80 | 3.12 | 2.13 | 2.59 |
-| Averaged | EAGLE-2 | 2.07 | 2.53 | 2.57 | 2.50 | 2.42 |
-| Confidence Routed | HASS | 3.93 | 5.01 | 5.37 | 4.89 | 4.80 |
-| Confidence Routed | EAGLE-2 | 3.63 | 4.91 | 5.25 | 4.71 | 4.63 |
-| Merged Trees | HASS | 4.05 | 5.42 | 5.65 | 5.31 | 5.11 |
-| Merged Trees | EAGLE-2 | 3.93 | 5.32 | 5.63 | 5.25 | 5.02 |
-
-### Temperature 1
-
-| Model Variant | Method | MT-Bench | GSM8K | MATH-500 | SVAMP | Average |
-| --- | --- | --- | --- | --- | --- | --- |
-| MathInstruct | HASS | 2.31 | 4.75 | 4.63 | 2.46 | 3.54 |
-| MathInstruct | EAGLE-2 | 2.43 | 4.71 | 4.61 | 4.53 | 4.07 |
-| ShareGPT | HASS | 3.50 | 4.03 | 3.61 | 3.95 | 3.77 |
-| ShareGPT | EAGLE-2 | 3.38 | 3.72 | 3.43 | 3.65 | 3.54 |
-| Mixed 35k+35k | HASS | 3.46 | 4.66 | 4.47 | 4.57 | 4.29 |
-| Mixed 35k+35k | EAGLE-2 | 3.10 | 4.08 | 4.02 | 4.03 | 3.81 |
-| Mixed 70k+70k | HASS | 3.17 | 4.16 | 3.42 | 4.01 | 3.69 |
-| Mixed 70k+70k | EAGLE-2 | 2.99 | 3.76 | 3.20 | 3.08 | 3.26 |
-| Averaged | HASS | 2.10 | 2.78 | 2.90 | 2.69 | 2.62 |
-| Averaged | EAGLE-2 | 2.01 | 2.49 | 2.42 | 2.45 | 2.34 |
-| Confidence Routed | HASS | 3.51 | 4.72 | 4.55 | 4.71 | 4.37 |
-| Confidence Routed | EAGLE-2 | 3.36 | 4.65 | 4.62 | 4.46 | 4.27 |
-| Merged Trees | HASS | 3.76 | 5.21 | 4.98 | 5.05 | 4.75 |
-| Merged Trees | EAGLE-2 | 3.55 | 5.01 | 4.79 | 4.93 | 4.57 |
+<p><strong>Temperature&nbsp;1</strong></p>
+<table>
+  <thead>
+    <tr><th>Model Variant</th><th>Method</th><th>MT-Bench</th><th>GSM8K</th><th>MATH-500</th><th>SVAMP</th><th>Average</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>MathInstruct</td><td>HASS</td><td>2.31</td><td>4.75</td><td>4.63</td><td>2.46</td><td>3.54</td></tr>
+    <tr><td>MathInstruct</td><td>EAGLE-2</td><td>2.43</td><td>4.71</td><td>4.61</td><td>4.53</td><td>4.07</td></tr>
+    <tr><td>ShareGPT</td><td>HASS</td><td>3.50</td><td>4.03</td><td>3.61</td><td>3.95</td><td>3.77</td></tr>
+    <tr><td>ShareGPT</td><td>EAGLE-2</td><td>3.38</td><td>3.72</td><td>3.43</td><td>3.65</td><td>3.54</td></tr>
+    <tr><td>Mixed 35k+35k</td><td>HASS</td><td>3.46</td><td>4.66</td><td>4.47</td><td>4.57</td><td>4.29</td></tr>
+    <tr><td>Mixed 35k+35k</td><td>EAGLE-2</td><td>3.10</td><td>4.08</td><td>4.02</td><td>4.03</td><td>3.81</td></tr>
+    <tr><td>Mixed 70k+70k</td><td>HASS</td><td>3.17</td><td>4.16</td><td>3.42</td><td>4.01</td><td>3.69</td></tr>
+    <tr><td>Mixed 70k+70k</td><td>EAGLE-2</td><td>2.99</td><td>3.76</td><td>3.20</td><td>3.08</td><td>3.26</td></tr>
+    <tr><td>Averaged</td><td>HASS</td><td>2.10</td><td>2.78</td><td>2.90</td><td>2.69</td><td>2.62</td></tr>
+    <tr><td>Averaged</td><td>EAGLE-2</td><td>2.01</td><td>2.49</td><td>2.42</td><td>2.45</td><td>2.34</td></tr>
+    <tr><td>Confidence Routed</td><td>HASS</td><td>3.51</td><td>4.72</td><td>4.55</td><td>4.71</td><td>4.37</td></tr>
+    <tr><td>Confidence Routed</td><td>EAGLE-2</td><td>3.36</td><td>4.65</td><td>4.62</td><td>4.46</td><td>4.27</td></tr>
+    <tr><td>Merged Trees</td><td>HASS</td><td>3.76</td><td>5.21</td><td>4.98</td><td>5.05</td><td>4.75</td></tr>
+    <tr><td>Merged Trees</td><td>EAGLE-2</td><td>3.55</td><td>5.01</td><td>4.79</td><td>4.93</td><td>4.57</td></tr>
+  </tbody>
+</table>
 
 ## Repository map
 | Folder | What lives here |
