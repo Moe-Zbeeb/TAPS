@@ -165,7 +165,3 @@ pip install -e Eagle-Code
   note={Technical report}
 }
 ```
-
-## License
-- `Eagle-Code` is Apache 2.0 (see `Eagle-Code/LICENSE`).
-- HASS scripts follow their upstream licenses; add a license file before redistribution.
