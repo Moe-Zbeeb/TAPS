@@ -49,41 +49,28 @@ TAPS studies how the draft training distribution shapes speculative decoding qua
 - **Routing signal:** Confidence cleanly separates workloads (MathInstruct chosen for 90.8% of GSM8K; ShareGPT for 81.2% of MT-Bench). Entropy is diagnostic but weaker for routing.
 
 ## Figures
-<table>
-  <tr>
-    <td align="center">
-      <img src="Taps-draft1/figures/illustrative.png" alt="Speculative decoding pipeline with draft proposals verified by the target model" height="170">
-    </td>
-    <td align="center">
-      <img src="Taps-draft1/figures/mergdTrees.png" alt="Merged-tree verification combining MathInstruct and ShareGPT draft trees" height="170">
-    </td>
-  </tr>
-  <tr>
-    <td align="center"><em>Speculative decoding pipeline.</em></td>
-    <td align="center"><em>Merged-tree verification packs MathInstruct and ShareGPT trees for one-pass verification.</em></td>
-  </tr>
-</table>
-
-<p align="center">
-  <img src="Taps-draft1/figures/averaging_effect.png" alt="Interpolation sweep for checkpoint averaging between MathInstruct and ShareGPT drafts" width="760">
-  <br>
-  <em>Checkpoint averaging is unstable across interpolation weights and remains weaker than inference-time composition.</em>
-</p>
-
-<table>
-  <tr>
-    <td align="center">
-      <img src="Taps-draft1/figures/depth_tables_grid.png" alt="Acceptance by speculative depth across backbones, benchmarks, and temperatures" width="460">
-    </td>
-    <td align="center">
-      <img src="Taps-draft1/figures/draft_entropy_eagle2.png" alt="Accepted vs. rejected token entropy for EAGLE-2 drafts" width="460">
-    </td>
-  </tr>
-  <tr>
-    <td align="center"><em>Acceptance declines with depth but specialization persists.</em></td>
-    <td align="center"><em>Rejected tokens show higher entropy; confidence remains the stronger routing signal.</em></td>
-  </tr>
-</table>
+<div align="center">
+  <figure style="display:inline-block;margin:0 12px 12px;vertical-align:top;">
+    <img src="Taps-draft1/figures/illustrative.png" alt="Speculative decoding pipeline with draft proposals verified by the target model" width="360">
+    <figcaption>Speculative decoding pipeline.</figcaption>
+  </figure>
+  <figure style="display:inline-block;margin:0 12px 12px;vertical-align:top;">
+    <img src="Taps-draft1/figures/mergdTrees.png" alt="Merged-tree verification combining MathInstruct and ShareGPT draft trees" width="360">
+    <figcaption>Merged-tree verification packs MathInstruct and ShareGPT trees for one-pass verification.</figcaption>
+  </figure>
+  <figure style="display:block;margin:12px auto;">
+    <img src="Taps-draft1/figures/averaging_effect.png" alt="Interpolation sweep for checkpoint averaging between MathInstruct and ShareGPT drafts" width="840">
+    <figcaption>Checkpoint averaging is unstable across interpolation weights and remains weaker than inference-time composition.</figcaption>
+  </figure>
+  <figure style="display:inline-block;margin:12px 12px 0;vertical-align:top;">
+    <img src="Taps-draft1/figures/depth_tables_grid.png" alt="Acceptance by speculative depth across backbones, benchmarks, and temperatures" width="420">
+    <figcaption>Acceptance declines with depth but specialization persists.</figcaption>
+  </figure>
+  <figure style="display:inline-block;margin:12px 12px 0;vertical-align:top;">
+    <img src="Taps-draft1/figures/draft_entropy_eagle2.png" alt="Accepted vs. rejected token entropy for EAGLE-2 drafts" width="420">
+    <figcaption>Rejected tokens show higher entropy; confidence remains the stronger routing signal.</figcaption>
+  </figure>
+</div>
 
 ## Results snapshot
 Benchmarks: MT-Bench (chat), GSM8K, MATH-500, SVAMP. Metric: average acceptance length (higher is better) under lossless speculative decoding. Tables stay inline (no collapses).
