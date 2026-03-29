@@ -88,8 +88,7 @@ TAPS studies how the draft training distribution shapes speculative decoding qua
 ## Results snapshot
 Benchmarks: MT-Bench (chat), GSM8K, MATH-500, SVAMP. Metric: average acceptance length (higher is better) under lossless speculative decoding.
 
-<details>
-<summary><b>Temperature 0</b></summary>
+### Temperature 0
 
 | Model Variant | Method | MT-Bench | GSM8K | MATH-500 | SVAMP | Average |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -108,10 +107,7 @@ Benchmarks: MT-Bench (chat), GSM8K, MATH-500, SVAMP. Metric: average acceptance 
 | Merged Trees | HASS | 4.05 | 5.42 | 5.65 | 5.31 | 5.11 |
 | Merged Trees | EAGLE-2 | 3.93 | 5.32 | 5.63 | 5.25 | 5.02 |
 
-</details>
-
-<details>
-<summary><b>Temperature 1</b></summary>
+### Temperature 1
 
 | Model Variant | Method | MT-Bench | GSM8K | MATH-500 | SVAMP | Average |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -129,8 +125,6 @@ Benchmarks: MT-Bench (chat), GSM8K, MATH-500, SVAMP. Metric: average acceptance 
 | Confidence Routed | EAGLE-2 | 3.36 | 4.65 | 4.62 | 4.46 | 4.27 |
 | Merged Trees | HASS | 3.76 | 5.21 | 4.98 | 5.05 | 4.75 |
 | Merged Trees | EAGLE-2 | 3.55 | 5.01 | 4.79 | 4.93 | 4.57 |
-
-</details>
 
 ## Repository map
 | Folder | What lives here |
