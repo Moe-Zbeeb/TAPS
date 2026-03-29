@@ -67,7 +67,7 @@ TAPS studies how the draft training distribution shapes speculative decoding qua
 <p align="center">
   <img src="Taps-draft1/figures/averaging_effect.png" alt="Interpolation sweep for checkpoint averaging between MathInstruct and ShareGPT drafts" width="760">
   <br>
-  <em>Checkpoint averaging is unstable across interpolation weights and remains weaker than inference-time composition (source: 5434×1294 px).</em>
+  <em>Checkpoint averaging is unstable across interpolation weights and remains weaker than inference-time composition.</em>
 </p>
 
 <table>
@@ -80,8 +80,8 @@ TAPS studies how the draft training distribution shapes speculative decoding qua
     </td>
   </tr>
   <tr>
-    <td align="center"><em>Acceptance declines with depth but specialization persists (source: 4046×3665 px).</em></td>
-    <td align="center"><em>Rejected tokens show higher entropy; confidence remains the stronger routing signal (source: 7059×1554 px).</em></td>
+    <td align="center"><em>Acceptance declines with depth but specialization persists.</em></td>
+    <td align="center"><em>Rejected tokens show higher entropy; confidence remains the stronger routing signal.</em></td>
   </tr>
 </table>
 
