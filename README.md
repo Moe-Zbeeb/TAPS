@@ -156,11 +156,6 @@ pip install -r Eagle-Code/requirements.txt
 pip install -e Eagle-Code
 ```
 
-Build the paper PDF (from `Taps-draft1/`):
-```bash
-latexmk -pdf -interaction=nonstopmode main.tex
-```
-
 ## Citation
 ```bibtex
 @article{zbib2026taps,
