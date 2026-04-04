@@ -162,8 +162,8 @@ pip install -e Eagle-Code
 ```bibtex
 @article{zbib2026taps,
   title={TAPS: Task Aware Proposal Distributions for Speculative Sampling},
-  author={Zbib, Mohamad and Bazzi, Mohamad and Mohanna, Ammar and Ghanem, Bernard and Hammoud, Hasan Abed Al Kader},
-  year={2026},
-  note={Technical report}
+  author={Zbib, Mohamad and Bazzi, Mohamad and Mohanna, Ammar and Hammoud, Hasan Abed Al Kader and Ghanem, Bernard},
+  journal={arXiv preprint arXiv:2603.27027},
+  year={2026}
 }
 ```
